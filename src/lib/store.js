@@ -22,9 +22,7 @@ module.exports = Store;
  */
 Store.prototype.set = function(path, content, type, cb) {
 
-    this.getClient().hmset(path, 'content', content, 'type', type, function(err, result) {
-        cb(err, result);
-    });
+    this.getClient().hmset(path, 'content', content, 'type', type, cb);
 
 };
 
@@ -36,9 +34,8 @@ Store.prototype.set = function(path, content, type, cb) {
  */
 Store.prototype.get = function(path, cb) {
 
-    this.getClient().hgetall(path, function(err, result) {
-        cb(err, result);
-    });
+    this.getClient().hgetall(path, cb);
+
 };
 
 /**
@@ -49,9 +46,8 @@ Store.prototype.get = function(path, cb) {
  */
 Store.prototype.delete = function(path, cb) {
 
-    this.getClient().del(path, function(err, result) {
-        cb(err, result);
-    });
+    this.getClient().del(path, cb);
+
 };
 
 /**
