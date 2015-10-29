@@ -10,3 +10,8 @@ curl -X PUT \
      -d '<p>Hello {{ name }}</p>' \
      http://$HOST:$PORT/test/hello \
      -v
+
+curl -X POST \
+     -d '{"name":"Malcolm"}' \
+     http://$HOST:$PORT/test/hello \
+     -v
