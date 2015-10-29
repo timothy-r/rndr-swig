@@ -23,11 +23,17 @@ module.exports = Store;
 Store.prototype.set = function(path, content, type, cb) {
 
     this.getClient().hmset(path, 'content', content, 'type', type, function(err, result) {
-        cb(err, result)
+        cb(err, result);
     });
 
 };
 
+/**
+ * Return the template data at path
+ *
+ * @param path
+ * @param cb
+ */
 Store.prototype.get = function(path, cb) {
 
     this.getClient().hgetall(path, function(err, result) {
@@ -36,7 +42,20 @@ Store.prototype.get = function(path, cb) {
 };
 
 /**
+ * Remove the template data at path
  *
+ * @param path
+ * @param cb
+ */
+Store.prototype.delete = function(path, cb) {
+
+    this.getClient().del(path, function(err, result) {
+        cb(err, result);
+    });
+};
+
+/**
+ * get an instance of Redis client
  */
 Store.prototype.getClient = function() {
 

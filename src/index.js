@@ -39,13 +39,15 @@ app.post('*', function(req, res) {
 
     config.getStore().get(req.path, function(err, data) {
 
-        if (!err && data) {
-            if (data.content) {
+        if (!err) {
+            if (data && data.content ){
 
-                // render data using swig
+                // respond with rendered template
                 return res.send(
                     swig.render(data.content, {locals: JSON.parse(req.body)})
                 );
+            } else {
+                return res.status(404).send();
             }
         }
 
@@ -65,14 +67,36 @@ app.get('*', function(req, res) {
     // use req.path as the identifier of the template
     config.getStore().get(req.path, function(err, data) {
 
-        if (!err && data) {
-            if (data.content) {
+        if (!err) {
+            if (data && data.content ){
                 return res.send(data.content);
+            } else {
+                return res.status(404).send();
             }
         }
 
         logger.error(err + ' : ' + data);
         res.status(500).json({error:err, data: data});
+    });
+
+});
+
+/**
+*  Remove the template at path
+*/
+app.delete('*', function(req, res) {
+
+    logger.info('Removing the template at ' + req.path);
+
+    // use req.path as the identifier of the template
+    config.getStore().delete(req.path, function(err, data) {
+
+        if (!err) {
+            return res.send();
+        }
+
+        logger.error(err);
+        res.status(500).json({error:err});
     });
 
 });

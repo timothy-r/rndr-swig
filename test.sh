@@ -19,3 +19,11 @@ curl -X POST \
      -d '{"name":"Malcolm"}' \
      http://$HOST:$PORT/test/hello \
      -v
+
+curl -X DELETE \
+     http://$HOST:$PORT/test/hello \
+     -v
+
+curl -X GET \
+     http://$HOST:$PORT/test/hello \
+     -v
