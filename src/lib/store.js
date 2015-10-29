@@ -22,10 +22,17 @@ module.exports = Store;
  */
 Store.prototype.set = function(path, content, type, cb) {
 
-    this.getClient().hmset(path, 'content', content, 'type', type, function(err, result){
+    this.getClient().hmset(path, 'content', content, 'type', type, function(err, result) {
         cb(err, result)
     });
 
+};
+
+Store.prototype.get = function(path, cb) {
+
+    this.getClient().hgetall(path, function(err, result) {
+        cb(err, result);
+    });
 };
 
 /**
